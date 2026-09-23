@@ -1435,7 +1435,8 @@ void recover_self_orthogonal(FQ_ELEM A[K][K_pad],
             }
         }
     }
-}
+}  
+
 
 /* Compresses a generator matrix in RREF storing only non-pivot columns and
  * their position */
@@ -1565,3 +1566,54 @@ void expand_rref_ao(FQ_ELEM *values,
         bit_idx += 7u;
     }
 }
+
+
+// Alg. 1 recovery paired with sampling algorithm 
+void recover_self_orthogonal_alg1(FQ_ELEM A_full[K][K_pad], FQ_ELEM A_triang[K][K_pad]){
+
+    FQ_ELEM A[K][K_pad] = {0};
+    memcpy(A_full,A_triang,K*K_pad); 
+    memcpy(A,A_triang,K*K_pad); 
+
+    uint64_t b = 0;
+    for(int i = 1; i < K; i++){
+
+        // Delete first i-1 positions in row i-1
+        for(int j=0; j<i-1; j++){
+            if(A[i-1][j] != 0){
+                row_sum(A[i-1],A[j],fq_opp(A[i-1][j]),K);
+            }
+        }
+
+        // Normalize row i by inverse of element in position i
+        row_mul(A[i-1],fq_inv(A[i-1][i-1]));
+
+        // Delete elements in column i row j =! i
+        uint16_t sum_start = (i-1) >> 5;
+        for(int j=0; j<i-1; j++){
+            if(A[j][i-1] != 0){
+                row_sum(A[j]+sum_start*32, A[i-1]+sum_start*32, fq_opp(A[j][i-1]), K-(sum_start*32));
+            }
+        }
+
+        
+        // Solve system var by var
+        for(int j=0; j<i; j++){
+            // Compute the right-hand coefficient of the system
+            b = 0;
+            if(K - i > 6){
+               b = superfast_scalar_prod(A[j]+i,A[i]+i,K-i+1);
+            }else{
+                for(int k=i; k<K; k++){
+                    b += A[j][k]*A[i][k];
+                }
+                b = b - ((b*8657571872)>>40)*127;
+            }
+
+            b = fq_opp(b); 
+            A[i][j]=b;
+            A_full[i][j]=b;
+        }
+    }
+}
+

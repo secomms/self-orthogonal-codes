@@ -98,69 +98,6 @@ void LESS_keygen(prikey_t *SK,
         generator_rref_compact(&SF_result_G, &result_G, is_pivot_column);
         compress_self_orthogonal(tri_matrix, SF_result_G.values, PK->extra_vars[i], PK->bitstring[i]);
         compress_rref_ao(PK->SF_G[i],tri_matrix,is_pivot_column);
-
-        {
-            FQ_ELEM tri_chk[RREF_AO_BYTES] = {0};
-            uint8_t piv_chk[N_pad] = {0};
-            rref_generator_mat_t chk = {0};
-
-            expand_rref_ao(tri_chk, PK->SF_G[i], piv_chk);
-            recover_self_orthogonal(chk.values, tri_chk,
-                                    PK->extra_vars[i], PK->bitstring[i]);
-        /*
-
-            if (memcmp(piv_chk, is_pivot_column, N) != 0) {
-                fprintf(stderr, "key %u: pivot flags differ\n", i);
-            }
-            for (uint32_t r = 0; r < K; r++) {
-                for (uint32_t c = 0; c < N - K; c++) {
-                    if (chk.values[r][c] != SF_result_G.values[r][c]) {
-                        fprintf(stderr, "key %u: first mismatch at row %u col %u "
-                                        "(got %u, expected %u)\n",
-                                i, r, c, chk.values[r][c], SF_result_G.values[r][c]);
-
-                        printf("DUMPING MATRIX!\n");
-
-                        //printf( "A = matrix(GF(127), [\n");
-                        //for (uint32_t r = 0; r < K; r++) {
-                        //    printf("  [");
-                        //    for (uint32_t c = 0; c < N - K; c++) {
-                        //        printf( "%u%s", SF_result_G.values[r][c], c + 1 < N - K ? "," : "");
-                        //    }
-                        //    printf("]%s\n", r + 1 < K ? "," : "");
-                        //}
-                        //printf("])\n");
-
-                        printf("static const FQ_ELEM failing_A[K][K_pad] = {\n");
-                        for (uint32_t r = 0; r < K; r++) {
-                            printf("    {");
-                            for (uint32_t c = 0; c < N - K; c++) {
-                                printf("%u%s", SF_result_G.values[r][c], c + 1 < N - K ? "," : "");
-                            }
-                            printf("},\n");
-                        }
-                        printf("};\n");
-
-
-
-
-
-                        goto ao_check_done;
-                    }
-                }
-            }
-        ao_check_done: ;
-        */
-        }
-
-        //printf("CODICE %u\n",i);
-        //for(int x = 0; x < K; x++){
-        //    printf("[ ");
-        //    for(int y = 0; y < N; y++){
-        //        printf("%u ", result_G.values[x][y]);
-        //    }
-        //    printf("]\n");
-        //}
     }
 } /* end LESS_keygen */
 

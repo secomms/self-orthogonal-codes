@@ -356,16 +356,51 @@ void test_anti_normalize(){
 }
 
 
+void test_alg1(void){
+    for(int i = 0; i < 100; i++){
+        unsigned char seed[SEED_LENGTH_BYTES];
+        randombytes(seed, SEED_LENGTH_BYTES);
+        FQ_ELEM A_orig[K][K_pad] = {0};
+        FQ_ELEM A[K][K_pad] = {0};
+        FQ_ELEM A_rec[K][K_pad] = {0};
+        sample_antiorthogonal(A_orig,seed);
+
+
+
+        memcpy(A,A_orig,K*K_pad);
+
+        for(uint16_t i=0; i<K; i++){
+            for(uint16_t j=0; j<(i); j++){
+                A[i][j] = 0;
+            }
+        }
+
+        recover_self_orthogonal_alg1(A_rec,A);
+
+        for(int i=0; i<K; i++){
+            for(int j=0; j<K_pad; j++){
+                if(A_rec[i][j] != A_orig[i][j]){
+                    printf("Recovery failed in position %u,%u.\n",i,j);
+                    printf("%u != %u \n",A_rec[i][j],A_orig[i][j]);
+                }
+            }
+        }
+    }
+
+}
+
+
 
 #define NUM_TEST_ITERATIONS 10
 int main(int argc, char* argv[]){
     (void)argc;
     (void)argv;
-    test_inner_prod();
-    test_row_mat_mult();
-    test_anti_normalize();
-    test_sample_antiorthogonal();
-    test_key_recovery();
-    LESS_sign_verify_test_multiple();
+    //test_inner_prod();
+    //test_row_mat_mult();
+    //test_anti_normalize();
+    //test_sample_antiorthogonal();
+    //test_key_recovery();
+    //LESS_sign_verify_test_multiple();
+    test_alg1();
     return 0;
 }

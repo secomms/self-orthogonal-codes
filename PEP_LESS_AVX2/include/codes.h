@@ -230,3 +230,5 @@ void compress_rref_ao(uint8_t *compressed,
 void expand_rref_ao(uint8_t *full,
                     const uint8_t *compressed,
                     uint8_t is_pivot_column[N]);
+
+void recover_self_orthogonal_alg1(FQ_ELEM A_full[K][K_pad], FQ_ELEM A_triang[K][K_pad]);
