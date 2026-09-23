@@ -94,9 +94,9 @@ for q in [127,8861]:
 print_param_line('LESS')
 
 q = 127;k = 126;n = 2*k;lamb = 128
-for s in [2,4,8]:
+for s in [2,4,8,16]:
     print_less_speck_sizes(q,k,n,s,lamb)
-
+"""
 k = 200;n = 2*k;lamb = 192
 for s in [2,4]:
     print_less_speck_sizes(q,k,n,s,lamb)
@@ -121,3 +121,6 @@ print_abl_sizes(q,k,n,s,lamb)
 
 k = 1250;n = 29688;q = 2^19;lamb=256
 print_abl_sizes(q,k,n,s,lamb)
+"""
+
+print(exp_com_cost(q,k)/8.0)
