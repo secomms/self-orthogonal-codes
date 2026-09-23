@@ -24,7 +24,6 @@
  *
  **/
 #include <string.h> // memcpy, memset
-#include <stdio.h> // memcpy, memset
 #include "LESS.h"
 #include "canonical.h"
 #include "seedtree.h"
@@ -303,7 +302,6 @@ int LESS_verify(const pubkey_t *const PK,
     rref_generator_mat_t tmp_G = {0};
 
     for (uint32_t i = 0; i < NUM_KEYPAIRS-1; i++) {
-        //printf("CODICE %u\n",i);
 
         expand_rref_ao(tri_matrix, PK->SF_G[i], is_pivot_column);
 
@@ -318,14 +316,6 @@ int LESS_verify(const pubkey_t *const PK,
         }
 
         generator_rref_expand(&Gs[i], &tmp_G);
-
-        //for(int x = 0; x < K; x++){
-        //    printf("[ ");
-        //    for(int y = 0; y < N; y++){
-        //        printf("%u ", Gs[i].values[x][y]);
-        //    }
-        //    printf("]\n");
-        //}
     }
 
     for (uint32_t i = 0; i < T; i++) {
@@ -377,7 +367,6 @@ int LESS_verify(const pubkey_t *const PK,
         normalized_copy_from_generator_non_information_set(&Ai, &G_prime, is_pivot_column);
         // compute the canonical form and exit on any failure
         if (CF(&Ai) == 0) {
-            printf("CF retry in round %u\n", i);
             return 0;
         }
 
