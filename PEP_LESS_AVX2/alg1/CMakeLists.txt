@@ -65,7 +65,7 @@ set(HEADERS
 include_directories(include)
 foreach(category "252" "400" "548")
   if(${category} EQUAL "252")
-    set(PARAM_TARGETS "192" "68" "45")
+    set(PARAM_TARGETS "192" "68" "45" "33")
   elseif(${category} EQUAL "400")
     set(PARAM_TARGETS "220" "102")
   elseif(${category} EQUAL "548")

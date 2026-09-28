@@ -1,0 +1,77 @@
+Code parameters: n= 252, k= 126, q=127
+num. keypairs = 8
+Fixed weight challenge vector: 45 rounds, weight 34 
+Private key: 32B
+Public key 49471B
+Signature: 1329B, 1.297852
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 15738.99,211.07
+Signature kCycles (avg,stddev): 34818.02,334.57
+Verification kCycles (avg,stddev):44587.63,334.12
+\n================68==================\n
+Code parameters: n= 252, k= 126, q=127
+num. keypairs = 4
+Fixed weight challenge vector: 68 rounds, weight 42 
+Private key: 32B
+Public key 21211B
+Signature: 1825B, 1.782227
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 7574.38,201.89
+Signature kCycles (avg,stddev): 51846.99,393.85
+Verification kCycles (avg,stddev):52506.39,392.18
+\n================192==================\n
+Code parameters: n= 252, k= 126, q=127
+num. keypairs = 2
+Fixed weight challenge vector: 192 rounds, weight 36 
+Private key: 32B
+Public key 7081B
+Signature: 2609B, 2.547852
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 3490.14,212.03
+Signature kCycles (avg,stddev): 139375.72,716.60
+Verification kCycles (avg,stddev):122461.58,751.04
+\n================102==================\n
+Code parameters: n= 400, k= 200, q=127
+num. keypairs = 4
+Fixed weight challenge vector: 102 rounds, weight 61 
+Private key: 48B
+Public key 53109B
+Signature: 4131B, 4.034180
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 22004.64,249.05
+Signature kCycles (avg,stddev): 203210.77,1034.62
+Verification kCycles (avg,stddev):201812.41,1023.61
+\n================220==================\n
+Code parameters: n= 400, k= 200, q=127
+num. keypairs = 2
+Fixed weight challenge vector: 220 rounds, weight 68 
+Private key: 48B
+Public key 17719B
+Signature: 6353B, 6.204102
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 10129.52,216.08
+Signature kCycles (avg,stddev): 425955.10,1554.18
+Verification kCycles (avg,stddev):390167.54,1619.23
+\n================137==================\n
+Code parameters: n= 548, k= 274, q=127
+num. keypairs = 4
+Fixed weight challenge vector: 137 rounds, weight 79 
+Private key: 64B
+Public key 99359B
+Signature: 7436B, 7.261719
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 49006.97,341.18
+Signature kCycles (avg,stddev): 583795.80,2124.20
+Verification kCycles (avg,stddev):608489.87,2133.83
+\n================345==================\n
+Code parameters: n= 548, k= 274, q=127
+num. keypairs = 2
+Fixed weight challenge vector: 345 rounds, weight 75 
+Private key: 64B
+Public key 33141B
+Signature: 10712B, 10.460938
+Timings (kcycles):
+Key generation kCycles (avg,stddev): 22122.23,295.01
+Signature kCycles (avg,stddev): 1444516.24,3323.23
+Verification kCycles (avg,stddev):1365008.92,3370.56
+\n================END=================\n

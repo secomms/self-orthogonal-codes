@@ -610,8 +610,9 @@ print(vec1*vec1)
 #
 #    return count
 
+"""
 def num_antiorthogonal(q, k, n_k):
-    """Number of k x n_k matrices A over GF(q), q odd, with A*A.T == -I."""
+    #Number of k x n_k matrices A over GF(q), q odd, with A*A.T == -I
     F = GF(q)
     eta = lambda x: 1 if F(x).is_square() else -1   # quadratic character
     c = F(-1)
@@ -655,14 +656,96 @@ observed += [0] * (K - len(observed))   # unseen matrices
 observed = [int(c) for c in observed]   # plain Python ints for scipy
 stat, p = chisquare(observed)           # default expectation is uniform: N/K each
 print(stat, p)
+"""
+
+
+
+def paolo():
+    n = 60 #desired code length
+    k = 15
+
+    q = n
+    P = Primes()
+    ok = 0
+    while ok == 0:
+        q = P.next(q)
+        if (q-1)%n == 0:
+            ok = 1
+
+    Fq = GF(q)
+
+
+    i = 1
+    while i<q:
+        i += 1
+        g = Fq(i)
+        ord = g.multiplicative_order()
+
+        if ord == n:
+            i = q
+
+    G = matrix(Fq, k, n)
+
+    for i in range(n):
+        values = []
+        for j in range(1, k+1):
+            val = g**(i*j)
+            G[j-1,i] = val
+
+    errors = 0
+    L = range(k)
+    T = Tuples(L, 3)  # all tuples of length 2 with repetition
+    for indices in T:
+        val = sum([ G[indices[0],j]*G[indices[1],j]*G[indices[2],j] for j in range(n)])
+        if val != 0:
+            print("Indices = ",indices,"-->",val,", exponent = ",3+sum(indices))
+            errors += 1
+    print("Errors = ",errors)
+
+    return G
+
+def recover_triorthogonal(G):
+
+
+    print(G)
+    
+    Fq = G.base_ring()
+    q = Fq.characteristic()
+    M = copy(G)
+
+    k = M.nrows()
+    n = M.ncols()
+    
+    for i in range(1,k):
+        for j in range(1+binomial(i,2)+binomial(i,3)):
+            if j >= n:
+                break
+            M[i,j] = 0
+
+    print(M)
+
+    B = copy(M)
+
+    roots = compute_roots(q)
+
+    # Recover row 2
+    inner_prod = 0
+    for i in range(1,n):
+        inner_prod += B[1,i]^2
+
+    print(roots[-inner_prod])
+    B[1,0] = roots[-inner_prod] # Actually I need to communicate a bit
+
+    # Recover the rest of the rows
+    for i in range(2,5):
+        for comb in Combinations(i,2):
+            x.append(i)
 
 
 
 
+        
 
-
-
-
-
-
-
+G = paolo()
+P = get_random_permutation(G.base_ring(),G.ncols())
+recover_triorthogonal(G*P)

@@ -54,6 +54,8 @@
 #define N (252u)
 #define K (126u)
 
+#define K_BITS (7)
+
 #define SEED_LENGTH_BYTES (16)
 #define SIGN_PIVOT_REUSE_LIMIT (25) // Ensures probability of non-CT operation is < 2^-64
                                     
@@ -97,6 +99,18 @@
 #define TREE_CONSECUTIVE_LEAVES {32, 12, 1}
 #define MAX_PUBLISHED_SEEDS 11
 
+#elif TARGET==33
+#define NUM_KEYPAIRS (16)
+#define T (33)
+#define W (29)
+#define TREE_OFFSETS {0, 0, 2, 2, 2, 2, 2}
+#define TREE_NODES_PER_LEVEL {1, 2, 2, 4, 8, 16, 32}
+#define TREE_LEAVES_PER_LEVEL {0, 1, 0, 0, 0, 0, 32}
+#define TREE_SUBROOTS 2
+#define TREE_LEAVES_START_INDICES {33, 2}
+#define TREE_CONSECUTIVE_LEAVES {32, 1}
+#define MAX_PUBLISHED_SEEDS 13
+
 #else
 #error define parameters in parameters.h
 #endif
@@ -105,6 +119,7 @@
 #elif CATEGORY == 400
 #define N (400)
 #define K (200)
+#define K_BITS (8)
 #define SEED_LENGTH_BYTES (24)
 #define SIGN_PIVOT_REUSE_LIMIT (51) // Ensures probability of non-CT operation is < 2^-64
                                     //
@@ -145,6 +160,7 @@
 #elif CATEGORY == 548
 #define N (548)
 #define K (274)
+#define K_BITS (9)
 #define SEED_LENGTH_BYTES (32)
 #define SIGN_PIVOT_REUSE_LIMIT (79) // Ensures probability of non-CT operation is < 2^-64
                                     //
@@ -255,11 +271,11 @@
 #define NUM_NODES_SEED_TREE ((2*NUM_LEAVES_SEED_TREE) - 1)
 
 #define RREF_MAT_PACKEDBYTES ((BITS_TO_REPRESENT(Q)*(N-K)*K + 7)/8 + (N + 7)/8)
-#define RREF_AO_BYTES ((K-1)*K/2) 
-#define RREF_AO_PACKEDBYTES ((BITS_TO_REPRESENT(Q)*RREF_AO_BYTES + 7)/8 + (N + 7)/8) 
+#define RREF_AO_BYTES ((K)*(K+1)/2) 
+#define RREF_AO_PACKEDBYTES ((BITS_TO_REPRESENT(Q)*RREF_AO_BYTES + 7)/8 + (N + 7)/8 + (K*K_BITS + 7)/8)
 
-#define LESS_CRYPTO_PUBLICKEYBYTES (NUM_KEYPAIRS*RREF_MAT_PACKEDBYTES)
-#define LESS_CRYPTO_SECRETKEYBYTES ((NUM_KEYPAIRS-1)*SEED_LENGTH_BYTES + RREF_MAT_PACKEDBYTES)
+#define LESS_CRYPTO_PUBLICKEYBYTES (NUM_KEYPAIRS*RREF_AO_PACKEDBYTES)
+#define LESS_CRYPTO_SECRETKEYBYTES ((NUM_KEYPAIRS-1)*SEED_LENGTH_BYTES + RREF_AO_PACKEDBYTES)
 
 #define SEED_TREE_MAX_PUBLISHED_BYTES (MAX_PUBLISHED_SEEDS*SEED_LENGTH_BYTES + 1)
 #define LESS_SIGNATURE_SIZE(NR_LEAVES) (HASH_DIGEST_LENGTH*2 + N8*W + NR_LEAVES*SEED_LENGTH_BYTES + 1)

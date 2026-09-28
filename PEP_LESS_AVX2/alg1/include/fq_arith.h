@@ -810,10 +810,6 @@ static inline void superfast_row_mat_mult(FQ_ELEM *out,
         acc = acc - 127;
         acc = acc + (-(acc >> 63))&127;
 
-        if(acc > 126){
-            printf("PORCATROIA!\n");
-        }
-
         out[col] = (uint8_t) acc; 
     }
 }
